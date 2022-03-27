@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32228.343
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TesteCitel.WEB", "TesteCitel.WEB.csproj", "{FDFA405B-4255-4B97-AADE-A6D83631CF2C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TesteCitel.Domain", "..\TesteCitel.Domain\TesteCitel.Domain.csproj", "{A4A4BC47-59C2-4DB3-B091-0694623B60AA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FDFA405B-4255-4B97-AADE-A6D83631CF2C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FDFA405B-4255-4B97-AADE-A6D83631CF2C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FDFA405B-4255-4B97-AADE-A6D83631CF2C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FDFA405B-4255-4B97-AADE-A6D83631CF2C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A4A4BC47-59C2-4DB3-B091-0694623B60AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4A4BC47-59C2-4DB3-B091-0694623B60AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A4A4BC47-59C2-4DB3-B091-0694623B60AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4A4BC47-59C2-4DB3-B091-0694623B60AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {40A7AF36-05CE-4CDA-A1D2-692C09E6BE26}
+	EndGlobalSection
+EndGlobal
