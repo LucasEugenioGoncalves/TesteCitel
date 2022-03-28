@@ -1,0 +1,203 @@
+﻿
+
+@Html.AntiForgeryToken()
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery Xsrf
+@functions{ public string GetAntiXsrfRequestToken()
+    {
+        return Xsrf.GetAndStoreTokens(Context).RequestToken;
+    } }
+
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@model TesteCitel.WEB.Models.CreateProductViewModel
+
+
+<section class="aw-layout-content  js-content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <h1>
+                Cadastro de produto
+            </h1>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+       
+        <form asp-action="Create" asp-controller="Product" method="post" class="form-vertical  js-form-loading">
+            <input type="hidden" id="productId" />
+            <div class="form-group">
+                <label for="input-produto-nome">Nome</label>
+                <input asp-for="Name" id="input-produto-nome" maxlength="50" required type="text" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="input-produto-preco">Preço</label>
+                        <input asp-for="Price" id="input-produto-preco" onkeyup="moeda(this);" required type="text" class="form-control" placeholder="R$" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <button class="btn  btn-primary" type="submit">Salvar</button>
+                <a href="pesquisa-produtos.html" class="btn  btn-default">Cancelar</a>
+            </div>
+
+        </form>
+
+            <div class="table-responsive">
+                <div id="tableproducts">
+                    <table id="tabela-produtos" class="table  table-striped  table-bordered  table-hover  table-condensed  js-sticky-table" style="padding: 0px;">
+                        <thead class="aw-table-header-solid tableFloatingHeaderOriginal" style="position: static; margin-top: 0px; left: 225px; z-index: 3; width: 1108px; top: 51px;">
+                            <tr>
+
+                                <th style="min-width: 0px; max-width: none;">Nome</th>
+                                <th class="table-pesq-produto-col-preco" style="min-width: 130px; max-width: none;">Preço</th>
+                                <th class="table-pesq-produto-col-acoes" style="min-width: 105px; max-width: none;">Ações</th>
+                            </tr>
+                        </thead>
+                        <thead class="aw-table-header-solid tableFloatingHeader" style="opacity: 0; display: none;">
+                            <tr>
+                                <th class="aw-table-checkbox">
+                                    <input type="checkbox">
+                                </th>
+                                <th>Nome</th>
+                                <th class="table-pesq-produto-col-preco">Preço</th>
+                                <th class="table-pesq-produto-col-acoes">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+
+                            @*@for (int i = 0; i < Model.listaProduto.Count; i++)
+                            {
+                                <tr>
+
+                                    <td>@Model.listaProduto[i].nomeProduto</td>
+                                    <td class="table-pesq-produto-col-preco">R$ @Model.listaProduto[i].precoProduto</td>
+                                    <td class="table-pesq-produto-col-estoque">@Model.listaProduto[i].qtdeEstoque</td>
+                                    <td class="table-pesq-produto-col-acoes">
+
+                                        <div class="btn-group">
+                                            <button class="btn  btn-default btn-primary btn-xs" onclick="btnEditarProduto(@Model.listaProduto[i].id_produto, '@Model.listaProduto[i].nomeProduto', '@Model.listaProduto[i].descricaoProduto', '@Model.listaProduto[i].qtdeEstoque', '@Model.listaProduto[i].precoProduto', '@Model.listaProduto[i].fotoProduto');">
+                                                Editar
+                                            </button>
+
+                                            <button class="btn  btn-default btn-danger btn-xs" onclick="ExcluirProduto(@Model.listaProduto[i].id_produto);">
+                                                Excluir
+                                            </button>
+                                        </div>
+
+                                    </td>
+                                </tr>
+                            }*@
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+    </div>
+</section>
+
+<script>
+
+    //window.addEventListener('load', function () {
+
+    //    var file = document.querySelector('#imageUpload');
+
+    //    file.addEventListener('change', function () {
+    //        var image = file.files[0];
+
+    //        var src = URL.createObjectURL(image);
+
+    //        //  document.querySelector("#profileImage").src = src;
+
+    //        resizeImage(src, { width: 200 }).then(function (blob) {
+    //            document.querySelector("#profileImage").src = URL.createObjectURL(blob);
+    //            document.getElementById('divbtnalterarfoto').style.display = 'block';
+    //        })
+
+
+    //    });
+    //})
+
+    function btnEditarProduto(idproduto, nomeProduto, descricaoProduto, qtdeProduto, precoProduto, foto) {
+
+        $("#idproduto").val(idproduto);
+        $("#input-produto-nome").val(nomeProduto);
+        $("#input-produto-descricao").val(descricaoProduto);
+        $("#input-produto-preco").val(precoProduto);
+        $("#input-produto-estoque").val(qtdeProduto);
+
+        document.getElementById('divbtnalterarfoto').style.display = 'block';
+        /*src imagem*/
+        document.getElementById('profileImage').src = foto + idproduto + '.png';
+        /*btn input imagem*/
+        document.getElementById('imageUpload').removeAttribute('required');
+
+    }
+
+    function loadImage(img, src) {
+        return new Promise((resolve, reject) => {
+            img.src = src;
+            img.completed ? resolve(img) : img.addEventListener('load', function () {
+                resolve(img)
+            });
+            img.addEventListener('error', reject);
+        })
+    }
+
+    function resizeImage(src, options) {
+
+        return loadImage(document.createElement('img'), src).then(function (image) {
+
+            var canvas = document.createElement('canvas');
+
+            if (options.width && !options.height) {
+                options.height = image.height * (options.width / image.width)
+            } else if (!options.width && options.height) {
+                options.width = image.width * (options.height / image.height)
+            }
+
+            Object.assign(canvas, options);
+
+            canvas.getContext('2d').drawImage(image, 0, 0, canvas.width, canvas.height);
+
+            return new Promise(function (resolve) {
+                canvas.toBlob(resolve, options.type || 'image/png', options.quality);
+            })
+        })
+    }
+
+    function somenteNumeros(e) {
+        var charCode = e.charCode ? e.charCode : e.keyCode;
+        // charCode 8 = backspace
+        // charCode 9 = tab
+        if (charCode != 8 && charCode != 9) {
+            // charCode 48 equivale a 0
+            // charCode 57 equivale a 9
+            if (charCode < 48 || charCode > 57) {
+                return false;
+            }
+        }
+    }
+
+    function moeda(i) {
+
+        var v = i.value.replace(/\D/g, '');
+        v = (v / 100).toFixed(2) + '';
+        v = v.replace(".", ",");
+        v = v.replace(/(\d)(\d{3})(\d{3}),/g, "$1.$2.$3,");
+        v = v.replace(/(\d)(\d{3}),/g, "$1.$2,");
+        i.value = v;
+
+    }
+</script>
