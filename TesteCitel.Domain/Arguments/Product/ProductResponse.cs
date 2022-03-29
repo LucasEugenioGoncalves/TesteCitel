@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TesteCitel.Domain.Arguments.Product
+﻿namespace TesteCitel.Domain.Arguments.Product
 {
     public class ProductResponse
     {
@@ -10,9 +8,17 @@ namespace TesteCitel.Domain.Arguments.Product
         public string CategoryName { get; set; }
         public string CategoryId { get; set; }
 
-        public static explicit operator ProductResponse(Entities.Product v)
+        public static explicit operator ProductResponse(Entities.Product product)
         {
-            throw new NotImplementedException();
+            if (product is null) return null;
+            return new ProductResponse
+            {
+                Id = product.Id,
+                CategoryId = product.CategoryId,
+                Name = product.Name,
+                Price = product.Price.ToString(),
+                CategoryName = product?.Category?.Name
+            }; 
         }
     }
 }
