@@ -19,6 +19,8 @@ namespace TesteCitel.IoC
 
             services.AddScoped<IServiceCategory, ServiceCategory>();
             services.AddScoped<IRepositoryCategory, RepositoryCategory>();
+            
+            services.AddScoped<IServiceUser, ServiceUser>();
         }
     }
 }
